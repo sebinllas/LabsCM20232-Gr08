@@ -56,38 +56,41 @@ fun PersonalInfoView(personViewModel: PersonViewModel) {
 @Composable
 fun PersonalInfoForm(personViewModel: PersonViewModel) {
 
-    val name by personViewModel.name.observeAsState(initial = "")
-    val lastNames by personViewModel.lastNames.observeAsState(initial = "")
-    val gender by personViewModel.gender.observeAsState(initial = null)
-    val educationLevel by personViewModel.educationLevel.observeAsState(initial = "")
-    val bornDate by personViewModel.bornDate.observeAsState(initial = null)
+    val user by personViewModel.user.observeAsState(initial = User())
 
     Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = name,
-            onValueChange = { personViewModel.setName(it) },
+            value = user.name,
+            onValueChange = { personViewModel.setUser(user.copy(name = it)) },
             label = { Text("Nombre") },
             leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null) }
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = lastNames,
-            onValueChange = { personViewModel.setLastNames(it) },
+            value = user.lastNames,
+            onValueChange = { personViewModel.setUser(user.copy(lastNames = it)) },
             label = { Text("Apellidos") },
             leadingIcon = { Icon(Icons.Rounded.PersonAdd, contentDescription = null) }
         )
         DateInput(
-            value = bornDate,
-            onValueChange = { personViewModel.setBornDate(it) },
+            value = user.bornDate,
+            onValueChange = { personViewModel.setUser(user.copy(bornDate = it)) },
             label = { Text("Fecha de nacimiento") },
             leadingIcon = { Icon(Icons.Rounded.DateRange, contentDescription = null) },
         )
-        SelectInput<String>(
-            items = EducationLevel.values().map { it.name },
-            selectedItem = educationLevel.toString(),
-            onItemSelected = { personViewModel.setEducationLevel(EducationLevel.valueOf(it)) },
-            dropdownItemFactory = { it, _ -> Text(it) },
+        SelectInput<EducationLevel>(
+            items = EducationLevel.values().map { it },
+            selectedItem = user.educationLevel,
+            label = { Text("Nivel de estudios") },
+            onItemSelected = {
+                personViewModel.setUser(
+                    user.copy(
+                        educationLevel = it
+                    )
+                )
+            },
+            dropdownItemFactory = { it, _ -> Text(it.name) },
             leadingIcon = {
                 Icon(
                     Icons.Rounded.School,
@@ -97,14 +100,16 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
         )
         RadioSelectInput(
             values = Gender.values().map { it.name },
-            selectedValue = gender,
+            selectedValue = user.gender,
             onChange = {
-                personViewModel.setGender(it)
+                personViewModel.setUser(
+                    user.copy(gender = it)
+                )
             },
             label = { Text("Sexo") },
             trailingIcon = {
                 Icon(
-                    when (gender) {
+                    when (user.gender) {
                         Gender.MALE -> Icons.Rounded.Male
                         Gender.FEMALE -> Icons.Rounded.Female
                         else -> Icons.Rounded.Android
@@ -113,13 +118,6 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
                 )
             }
         )
-        PersonCard(
-            name = name,
-            lastNames = lastNames,
-            bornDate = bornDate?.toString() ?: "",
-            educationLevel = educationLevel.toString(),
-            gender = gender?.toString() ?: "",
-        )
-
+        PersonCard(user)
     }
 }

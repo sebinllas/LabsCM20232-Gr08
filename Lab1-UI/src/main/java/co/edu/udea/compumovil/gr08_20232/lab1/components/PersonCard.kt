@@ -9,34 +9,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
+import co.edu.udea.compumovil.gr08_20232.lab1.User
 
 @Composable
-fun PersonCard(
-    name: String? = "",
-    lastNames: String? = "",
-    bornDate: String? = "",
-    educationLevel: String = "",
-    gender: String? = "",
-    email: String? = "",
-    phone: String? = "",
-    address: String? = "",
-    city: String? = "",
-    country: String? = "",
-) {
+fun PersonCard(user: User) {
     Card {
         Column {
             Row {
                 Icon(Icons.Rounded.AccountCircle, contentDescription = null)
-                Text(text = "$name $lastNames", fontSize = 20.sp)
+                Text(text = "${user.name} ${user.lastNames}", fontSize = 20.sp)
             }
-            Text(text = "Fecha de nacimiento: $bornDate")
-            Text(text = "Nivel de educación: $educationLevel")
-            Text(text = "Género: $gender")
-            Text(text = "Correo electrónico: $email")
-            Text(text = "Teléfono: $phone")
-            Text(text = "Dirección: $address")
-            Text(text = "Ciudad: $city")
-            Text(text = "País: $country")
+            Text(text = "Fecha de nacimiento: ${user.bornDate}")
+            Text(text = "Nivel de educación: ${user.educationLevel}")
+            Text(text = "Género: ${user.gender}")
+            Text(text = "Correo electrónico: ${user.email}")
+            Text(text = "Teléfono: ${user.phone}")
+            Text(text = "Dirección: ${user.address}")
+            Text(text = "Ciudad: ${user.city}")
+            Text(text = "País: ${user.country}")
         }
     }
 }

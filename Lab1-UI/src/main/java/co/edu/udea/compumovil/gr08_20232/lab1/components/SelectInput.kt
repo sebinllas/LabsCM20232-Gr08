@@ -9,7 +9,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,10 +24,11 @@ fun <T> SelectInput(
     modifier: Modifier = Modifier,
     dropDownModifier: Modifier = Modifier,
     items: List<T>,
-    selectedItem: T,
+    selectedItem: T?,
     onItemSelected: (T) -> Unit,
     dropdownItemFactory: @Composable (T, Int) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
+    label: @Composable (() -> Unit)? = null,
 ) {
     var expanded: Boolean by remember { mutableStateOf(false) }
 
@@ -40,7 +40,7 @@ fun <T> SelectInput(
                 .fillMaxWidth()
                 .clickable { expanded = !expanded }
                 .onFocusChanged { if (it.isFocused) expanded = !expanded },
-            value = selectedItem.toString(),
+            value = if(selectedItem == null) "" else selectedItem.toString(),
             onValueChange = {},
             readOnly = true,
             trailingIcon = {
@@ -49,7 +49,7 @@ fun <T> SelectInput(
                 )
             },
             leadingIcon = leadingIcon,
-            label = { Text("Nivel de estudios") },
+            label = label,
         )
 
         DropdownMenu(
