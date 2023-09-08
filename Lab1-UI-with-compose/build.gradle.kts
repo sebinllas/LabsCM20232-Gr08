@@ -73,4 +73,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.0")
     implementation("androidx.compose.material:material-icons-extended-android:1.5.0")
+    implementation("androidx.navigation:navigation-compose:2.7.1")
 }

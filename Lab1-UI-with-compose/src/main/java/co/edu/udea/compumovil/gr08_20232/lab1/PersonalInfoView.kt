@@ -3,10 +3,10 @@ package co.edu.udea.compumovil.gr08_20232.lab1
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.ArrowForward
@@ -26,8 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import co.edu.udea.compumovil.gr08_20232.lab1.components.DateInput
-import co.edu.udea.compumovil.gr08_20232.lab1.components.PersonCard
 import co.edu.udea.compumovil.gr08_20232.lab1.components.RadioSelectInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
 
@@ -37,8 +37,9 @@ import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
 fun PersonalInfoView(personViewModel: PersonViewModel) {
     Scaffold(
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Column(modifier = Modifier.padding(it)) {
                 PersonalInfoForm(personViewModel = personViewModel)
+                ContactInfoForm(personViewModel = personViewModel)
             }
         },
         floatingActionButton = {
@@ -64,14 +65,20 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             value = user.name,
             onValueChange = { personViewModel.setUser(user.copy(name = it)) },
             label = { Text("Nombre") },
-            leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null) }
+            leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null) },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            )
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = user.lastNames,
             onValueChange = { personViewModel.setUser(user.copy(lastNames = it)) },
             label = { Text("Apellidos") },
-            leadingIcon = { Icon(Icons.Rounded.PersonAdd, contentDescription = null) }
+            leadingIcon = { Icon(Icons.Rounded.PersonAdd, contentDescription = null) },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            )
         )
         DateInput(
             value = user.bornDate,
@@ -118,6 +125,5 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
                 )
             }
         )
-        PersonCard(user)
     }
 }
