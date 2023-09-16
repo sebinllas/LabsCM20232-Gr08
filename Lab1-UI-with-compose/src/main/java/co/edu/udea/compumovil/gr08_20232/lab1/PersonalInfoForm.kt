@@ -22,7 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.intl.Locale
 import co.edu.udea.compumovil.gr08_20232.lab1.components.DateInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.RadioSelectInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
@@ -40,7 +42,7 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             modifier = Modifier.fillMaxWidth(),
             value = user.name,
             onValueChange = { personViewModel.setUser(user.copy(name = it)) },
-            label = { Text("Nombre") },
+            label = { Text(stringResource(R.string.name_label)) },
             leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null) },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
