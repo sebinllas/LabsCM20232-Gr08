@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr08_20232.lab1
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import java.time.LocalDate
 
 enum class Gender {
@@ -44,7 +45,7 @@ data class User(
 
 }
 
-class PersonViewModel {
+class PersonViewModel: ViewModel() {
     private val _user = MutableLiveData<User>()
     var user: LiveData<User> = _user
 
