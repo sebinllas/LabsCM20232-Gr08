@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr08_20232.lab1
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
@@ -64,13 +65,14 @@ fun Lab1AppBar(
 fun Lab1App(
     personViewModel: PersonViewModel,
     navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier,
 ) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
 
     Scaffold(
-        content = {_ ->
-            NavHost(navController = navController, startDestination = Screens.PersonalInfo.name) {
+        content = {innerPadding ->
+            NavHost(navController = navController, startDestination = Screens.PersonalInfo.name, modifier = modifier.padding(innerPadding)) {
 
                 composable(route = Screens.PersonalInfo.name) {
                     PersonalInfoForm(personViewModel = personViewModel)
