@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PersonalInfoView(personViewModel = personViewModel)
+                    Lab1App(personViewModel = personViewModel)
                 }
             }
         }

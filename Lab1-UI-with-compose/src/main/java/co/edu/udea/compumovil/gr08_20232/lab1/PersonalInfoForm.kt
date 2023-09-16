@@ -1,26 +1,20 @@
 package co.edu.udea.compumovil.gr08_20232.lab1
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
-import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.Female
 import androidx.compose.material.icons.rounded.Male
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.material.icons.rounded.School
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,26 +25,6 @@ import co.edu.udea.compumovil.gr08_20232.lab1.components.DateInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.RadioSelectInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
 
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun PersonalInfoView(personViewModel: PersonViewModel) {
-    Scaffold(
-        content = {
-            Column(modifier = Modifier.padding(it)) {
-                PersonalInfoForm(personViewModel = personViewModel)
-                ContactInfoForm(personViewModel = personViewModel)
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { Log.i("PersonalInfoView", personViewModel.toString()) },
-                content = { Icon(Icons.Rounded.ArrowForward, contentDescription = null) }
-            )
-        },
-        floatingActionButtonPosition = FabPosition.End
-    )
-}
 
 
 @RequiresApi(Build.VERSION_CODES.O)
