@@ -58,7 +58,6 @@ fun Lab1AppBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -71,8 +70,12 @@ fun Lab1App(
     val backStackEntry by navController.currentBackStackEntryAsState()
 
     Scaffold(
-        content = {innerPadding ->
-            NavHost(navController = navController, startDestination = Screens.PersonalInfo.name, modifier = modifier.padding(innerPadding)) {
+        content = { innerPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = Screens.PersonalInfo.name,
+                modifier = modifier.padding(innerPadding)
+            ) {
 
                 composable(route = Screens.PersonalInfo.name) {
                     PersonalInfoForm(personViewModel = personViewModel)
@@ -84,8 +87,12 @@ fun Lab1App(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(Screens.ContactInfo.name) },
-                content = { Icon(Icons.Rounded.ArrowForward, contentDescription = null) }
+                onClick = {
+                    if (personViewModel.validPersonalInfo()) {
+                        navController.navigate(Screens.ContactInfo.name)
+                    }
+                },
+                content = { Icon(Icons.Rounded.ArrowForward, contentDescription = null) },
             )
         },
         topBar = {
@@ -94,7 +101,7 @@ fun Lab1App(
                 navigateUp = { navController.navigateUp() },
                 currentScreen = backStackEntry?.destination?.route ?: Screens.PersonalInfo.name,
 
-        )
+                )
         },
         floatingActionButtonPosition = FabPosition.End
     )
