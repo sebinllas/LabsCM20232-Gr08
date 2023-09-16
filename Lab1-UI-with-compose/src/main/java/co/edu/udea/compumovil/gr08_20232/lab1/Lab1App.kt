@@ -2,6 +2,7 @@ package co.edu.udea.compumovil.gr08_20232.lab1
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -90,6 +91,9 @@ fun Lab1App(
                 onClick = {
                     if (personViewModel.validPersonalInfo()) {
                         navController.navigate(Screens.ContactInfo.name)
+                    }
+                    if(personViewModel.validContactInfo()){
+                        Log.i("user-info", personViewModel.user.value.toString())
                     }
                 },
                 content = { Icon(Icons.Rounded.ArrowForward, contentDescription = null) },
