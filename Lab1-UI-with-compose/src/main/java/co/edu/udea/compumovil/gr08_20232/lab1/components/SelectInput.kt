@@ -26,9 +26,10 @@ fun <T> SelectInput(
     items: List<T>,
     selectedItem: T?,
     onItemSelected: (T) -> Unit,
-    dropdownItemFactory: @Composable (T, Int) -> Unit,
+    itemFactory: @Composable (T, Int) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     label: @Composable (() -> Unit)? = null,
+    textValueFactory: @Composable (T) -> String = { it.toString() },
 ) {
     var expanded: Boolean by remember { mutableStateOf(false) }
 
@@ -40,7 +41,7 @@ fun <T> SelectInput(
                 .fillMaxWidth()
                 .clickable { expanded = !expanded }
                 .onFocusChanged { if (it.isFocused) expanded = !expanded },
-            value = if(selectedItem == null) "" else selectedItem.toString(),
+            value = if(selectedItem == null) "" else textValueFactory(selectedItem),
             onValueChange = {},
             readOnly = true,
             trailingIcon = {
@@ -59,7 +60,7 @@ fun <T> SelectInput(
         ) {
             items.forEachIndexed { index, element ->
                 DropdownMenuItem(
-                    text = { dropdownItemFactory(element, index) },
+                    text = { itemFactory(element, index) },
                     onClick = {
                         onItemSelected(items[index])
                         expanded = false

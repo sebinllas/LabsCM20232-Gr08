@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">LabsCM20232-Gr08</string>
     <string name="name_label">Nombre</string>
+    <string name="gender_male">M</string>
+    <string name="gender_female">F</string>
+    <string name="gender_other">Otro</string>
+    <string name="education_level_primary">Primaria</string>
+    <string name="education_level_secondary">Secundaria</string>
+    <string name="education_level_technical">Técnica</string>
+    <string name="education_level_technologist">Tecnólogo</string>
+    <string name="education_level_professional">Profesional</string>
+    <string name="education_level_specialist">Especialista</string>
+    <string name="education_level_master">Máster</string>
+    <string name="education_level_doctorate">Doctorado</string>
+    <string name="personal_info">Información personal</string>
+    <string name="contact_info">Información de Contacto</string>
 </resources>

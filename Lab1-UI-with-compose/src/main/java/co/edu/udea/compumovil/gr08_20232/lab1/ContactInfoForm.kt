@@ -66,7 +66,7 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
                     )
                 )
             },
-            dropdownItemFactory = { it, _ -> Text(it) },
+            itemFactory = { it, _ -> Text(it) },
             leadingIcon = {
                 Icon(
                     Icons.Rounded.Language,

@@ -1,27 +1,29 @@
 package co.edu.udea.compumovil.gr08_20232.lab1
 
 import android.util.Patterns
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.time.LocalDate
 
-enum class Gender {
-    MALE,
-    FEMALE,
-    OTHER
+enum class Gender(@StringRes val resourceId: Int) {
+    MALE(R.string.gender_male),
+    FEMALE(R.string.gender_female),
+    OTHER(R.string.gender_other)
 }
 
-enum class EducationLevel {
-    PRIMARY,
-    SECONDARY,
-    TECHNICAL,
-    TECHNOLOGIST,
-    PROFESSIONAL,
-    SPECIALIST,
-    MASTER,
-    DOCTORATE
+enum class EducationLevel(val resourceId: Int) {
+    PRIMARY(R.string.education_level_primary),
+    SECONDARY(R.string.education_level_secondary),
+    TECHNICAL(R.string.education_level_technical),
+    TECHNOLOGIST(R.string.education_level_technologist),
+    PROFESSIONAL(R.string.education_level_professional),
+    SPECIALIST(R.string.education_level_specialist),
+    MASTER(R.string.education_level_master),
+    DOCTORATE(R.string.education_level_doctorate)
 }
+
 
 data class User(
     val name: String = "",
@@ -45,7 +47,7 @@ data class User(
 
 }
 
-class PersonViewModel: ViewModel() {
+class PersonViewModel : ViewModel() {
     private val _user = MutableLiveData<User>()
     var user: LiveData<User> = _user
 

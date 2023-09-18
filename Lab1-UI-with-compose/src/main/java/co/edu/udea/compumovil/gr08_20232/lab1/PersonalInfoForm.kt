@@ -24,7 +24,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.intl.Locale
 import co.edu.udea.compumovil.gr08_20232.lab1.components.DateInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.RadioSelectInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
@@ -37,7 +36,9 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
 
     val user by personViewModel.user.observeAsState(initial = User())
 
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = user.name,
@@ -64,7 +65,7 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             label = { Text("Fecha de nacimiento") },
             leadingIcon = { Icon(Icons.Rounded.DateRange, contentDescription = null) },
         )
-        SelectInput<EducationLevel>(
+        SelectInput(
             items = EducationLevel.values().map { it },
             selectedItem = user.educationLevel,
             label = { Text("Nivel de estudios") },
@@ -75,7 +76,8 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
                     )
                 )
             },
-            dropdownItemFactory = { it, _ -> Text(it.name) },
+            itemFactory = { it, _ -> Text(stringResource(id = it.resourceId)) },
+            textValueFactory = { stringResource(id = it.resourceId) },
             leadingIcon = {
                 Icon(
                     Icons.Rounded.School,
@@ -84,7 +86,7 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             },
         )
         RadioSelectInput(
-            values = Gender.values().map { it.name },
+            values = Gender.values().map { it },
             selectedValue = user.gender,
             onChange = {
                 personViewModel.setUser(
@@ -101,7 +103,8 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
                     },
                     contentDescription = null,
                 )
-            }
+            },
+            itemFactory = { it, _ -> Text(stringResource(id = it.resourceId)) },
         )
     }
 }
