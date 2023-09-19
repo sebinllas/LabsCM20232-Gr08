@@ -53,7 +53,7 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             modifier = Modifier.fillMaxWidth(),
             value = user.lastNames,
             onValueChange = { personViewModel.setUser(user.copy(lastNames = it)) },
-            label = { Text("Apellidos") },
+            label = { Text(stringResource(id = R.string.lastname_label)) },
             leadingIcon = { Icon(Icons.Rounded.PersonAdd, contentDescription = null) },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
@@ -62,13 +62,13 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
         DateInput(
             value = user.bornDate,
             onValueChange = { personViewModel.setUser(user.copy(bornDate = it)) },
-            label = { Text("Fecha de nacimiento") },
+            label = { Text(stringResource(id = R.string.birthdate_label)) },
             leadingIcon = { Icon(Icons.Rounded.DateRange, contentDescription = null) },
         )
         SelectInput(
             items = EducationLevel.values().map { it },
             selectedItem = user.educationLevel,
-            label = { Text("Nivel de estudios") },
+            label = { Text(stringResource(id = R.string.education_level)) },
             onItemSelected = {
                 personViewModel.setUser(
                     user.copy(
@@ -93,7 +93,7 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
                     user.copy(gender = it)
                 )
             },
-            label = { Text("Sexo") },
+            label = { Text(stringResource(id = R.string.gender)) },
             trailingIcon = {
                 Icon(
                     when (user.gender) {

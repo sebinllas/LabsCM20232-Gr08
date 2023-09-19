@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">LabsCM20232-Gr08</string>
     <string name="name_label">Nombre</string>
-    <string name="gender_male">M</string>
-    <string name="gender_female">F</string>
-    <string name="gender_other">Otro</string>
+    <string name="lastname_label">Apellidos</string>
+    <string name="birthdate_label">Fecha de nacimiento</string>
+    <string name="education_level">Nivel de estudios</string>
     <string name="education_level_primary">Primaria</string>
     <string name="education_level_secondary">Secundaria</string>
     <string name="education_level_technical">Técnica</string>
@@ -12,6 +12,16 @@
     <string name="education_level_specialist">Especialista</string>
     <string name="education_level_master">Máster</string>
     <string name="education_level_doctorate">Doctorado</string>
+    <string name="gender">Género</string>
+    <string name="gender_male">M</string>
+    <string name="gender_female">F</string>
+    <string name="gender_other">Otro</string>
     <string name="personal_info">Información personal</string>
     <string name="contact_info">Información de Contacto</string>
+    <string name="phone_label">Teléfono</string>
+    <string name="email_label">Correo</string>
+    <string name="country_label">País</string>
+    <string name="city_label">Ciudad</string>
+    <string name="address_label">Dirección</string>
+
 </resources>
