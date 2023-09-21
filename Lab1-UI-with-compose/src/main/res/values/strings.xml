@@ -23,5 +23,6 @@
     <string name="country_label">País</string>
     <string name="city_label">Ciudad</string>
     <string name="address_label">Dirección</string>
-
+    <string name="info_summary">Resumen</string>
+    <string name="invalid_fields_message">Los siguientes campos son inválidos: %1$s</string>
 </resources>

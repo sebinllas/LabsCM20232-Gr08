@@ -8,13 +8,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.Female
 import androidx.compose.material.icons.rounded.Male
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.material.icons.rounded.School
+import androidx.compose.material.icons.rounded.Wc
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -29,16 +29,18 @@ import co.edu.udea.compumovil.gr08_20232.lab1.components.RadioSelectInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
 
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PersonalInfoForm(personViewModel: PersonViewModel) {
 
     val user by personViewModel.user.observeAsState(initial = User())
+    val showErrors by personViewModel.personalInfoNextClicked.observeAsState(false)
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .verticalScroll(rememberScrollState())) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = user.name,
@@ -47,7 +49,9 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null) },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
-            )
+            ),
+            singleLine = true,
+            isError = showErrors && !user.validName(),
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -57,13 +61,16 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
             leadingIcon = { Icon(Icons.Rounded.PersonAdd, contentDescription = null) },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
-            )
+            ),
+            singleLine = true,
+            isError = showErrors && !user.validLastNames(),
         )
         DateInput(
             value = user.bornDate,
             onValueChange = { personViewModel.setUser(user.copy(bornDate = it)) },
             label = { Text(stringResource(id = R.string.birthdate_label)) },
             leadingIcon = { Icon(Icons.Rounded.DateRange, contentDescription = null) },
+            isError = showErrors && !user.validBornDate(),
         )
         SelectInput(
             items = EducationLevel.values().map { it },
@@ -99,7 +106,7 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
                     when (user.gender) {
                         Gender.MALE -> Icons.Rounded.Male
                         Gender.FEMALE -> Icons.Rounded.Female
-                        else -> Icons.Rounded.Android
+                        else -> Icons.Rounded.Wc
                     },
                     contentDescription = null,
                 )

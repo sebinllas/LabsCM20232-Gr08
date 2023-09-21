@@ -31,6 +31,7 @@ import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
 fun ContactInfoForm(personViewModel: PersonViewModel) {
 
     val user by personViewModel.user.observeAsState(initial = User())
+    val showErrors by personViewModel.contactInfoNextClicked.observeAsState(false)
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -45,7 +46,7 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
                 keyboardType = KeyboardType.Phone,
                 imeAction = ImeAction.Next
             ),
-            isError = !user.validPhone(),
+            isError = showErrors && !user.validPhone(),
 
             )
         OutlinedTextField(
@@ -58,7 +59,7 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             ),
-            isError = !user.validEmail(),
+            isError = showErrors && !user.validEmail(),
         )
         SelectInput(
             items = listOf("Colombia", "México", "Estados Unidos"),
@@ -78,6 +79,7 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
                     contentDescription = null,
                 )
             },
+            isError = showErrors && !user.validCountry(),
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),

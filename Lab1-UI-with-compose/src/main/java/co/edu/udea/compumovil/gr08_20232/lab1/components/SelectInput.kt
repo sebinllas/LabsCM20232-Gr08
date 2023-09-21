@@ -30,6 +30,7 @@ fun <T> SelectInput(
     leadingIcon: @Composable (() -> Unit)? = null,
     label: @Composable (() -> Unit)? = null,
     textValueFactory: @Composable (T) -> String = { it.toString() },
+    isError: Boolean = false,
 ) {
     var expanded: Boolean by remember { mutableStateOf(false) }
 
@@ -51,6 +52,7 @@ fun <T> SelectInput(
             },
             leadingIcon = leadingIcon,
             label = label,
+            isError = isError,
         )
 
         DropdownMenu(

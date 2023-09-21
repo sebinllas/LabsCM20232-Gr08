@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
 import java.time.LocalDate
-import java.util.Calendar
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -22,8 +21,8 @@ fun DateInput(
     label: @Composable (() -> Unit),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
 ) {
-    val calendar = Calendar.getInstance()
     val dialog = DatePickerDialog(
         LocalContext.current,
         { _, y, m, d ->
@@ -45,6 +44,7 @@ fun DateInput(
             leadingIcon = leadingIcon,
             label = label,
             trailingIcon = trailingIcon,
+            isError = isError,
         )
     }
 

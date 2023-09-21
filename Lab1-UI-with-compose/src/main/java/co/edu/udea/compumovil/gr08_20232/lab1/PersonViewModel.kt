@@ -51,8 +51,23 @@ class PersonViewModel : ViewModel() {
     private val _user = MutableLiveData<User>()
     var user: LiveData<User> = _user
 
+    private val _personalInfoNextClicked = MutableLiveData(false)
+    var personalInfoNextClicked: LiveData<Boolean> = _personalInfoNextClicked
+
+
+    private val _contactInfoNextClicked = MutableLiveData(false)
+    var contactInfoNextClicked: LiveData<Boolean> = _contactInfoNextClicked
+
     fun setUser(it: User) {
         _user.value = it
+    }
+
+    fun setPersonalInfoNextClicked(it: Boolean) {
+        _personalInfoNextClicked.value = it
+    }
+
+    fun setContactInfoNextClicked(it: Boolean) {
+        _contactInfoNextClicked.value = it
     }
 
     fun validPersonalInfo(): Boolean {
@@ -69,6 +84,34 @@ class PersonViewModel : ViewModel() {
         return user.value!!.validPhone()
                 && user.value!!.validEmail()
                 && user.value!!.validCountry()
+    }
+
+    fun getInvalidPersonalInfoFields(): List<Int> {
+        if (user.value == null) {
+            return listOf(R.string.name_label, R.string.lastname_label, R.string.birthdate_label)
+        }
+        return mutableListOf<Int>().apply {
+            if (!user.value!!.validName())
+                add(R.string.name_label)
+            if (!user.value!!.validLastNames())
+                add(R.string.lastname_label)
+            if (!user.value!!.validBornDate())
+                add(R.string.birthdate_label)
+        }
+    }
+
+    fun getInvalidContactInfoFields(): List<Int> {
+        if (user.value == null) {
+            return listOf(R.string.country_label, R.string.phone_label, R.string.email_label)
+        }
+        return mutableListOf<Int>().apply {
+            if (!user.value!!.validCountry())
+                add(R.string.country_label)
+            if (!user.value!!.validPhone())
+                add(R.string.phone_label)
+            if (!user.value!!.validEmail())
+                add(R.string.email_label)
+        }
     }
 
 }

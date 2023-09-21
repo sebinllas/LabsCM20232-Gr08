@@ -23,4 +23,6 @@
     <string name="country_label">Country</string>
     <string name="city_label">City</string>
     <string name="address_label">Address</string>
+    <string name="info_summary">Summary</string>
+    <string name="invalid_fields_message">The following fields are invalid: %1$s</string>
 </resources>
