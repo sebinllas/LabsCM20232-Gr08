@@ -20,10 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
+import co.edu.udea.compumovil.gr08_20232.lab1.components.AutoCompleteInput
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -33,9 +34,11 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
     val user by personViewModel.user.observeAsState(initial = User())
     val showErrors by personViewModel.contactInfoNextClicked.observeAsState(false)
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .verticalScroll(rememberScrollState())) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = user.phone,
@@ -61,18 +64,17 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
             ),
             isError = showErrors && !user.validEmail(),
         )
-        SelectInput(
-            items = listOf("Colombia", "México", "Estados Unidos"),
-            selectedItem = user.country,
+        AutoCompleteInput(
+            value = user.country,
             label = { Text(stringResource(id = R.string.country_label)) },
-            onItemSelected = {
+            onValueChange = {
                 personViewModel.setUser(
                     user.copy(
                         country = it
                     )
                 )
             },
-            itemFactory = { it, _ -> Text(it) },
+            suggestions = stringArrayResource(id = R.array.countries).toList(),
             leadingIcon = {
                 Icon(
                     Icons.Rounded.Language,
@@ -80,16 +82,24 @@ fun ContactInfoForm(personViewModel: PersonViewModel) {
                 )
             },
             isError = showErrors && !user.validCountry(),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            ),
         )
-        OutlinedTextField(
+        AutoCompleteInput(
             modifier = Modifier.fillMaxWidth(),
             value = user.city,
             onValueChange = { personViewModel.setUser(user.copy(city = it)) },
             label = { Text(stringResource(id = R.string.city_label)) },
             leadingIcon = { Icon(Icons.Rounded.LocationOn, contentDescription = null) },
+            suggestions = if (personViewModel.getCitySuggestions() !== null) {
+                stringArrayResource(
+                    id = personViewModel.getCitySuggestions()!!
+                ).toList()
+            } else emptyList(),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
-            )
+            ),
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),

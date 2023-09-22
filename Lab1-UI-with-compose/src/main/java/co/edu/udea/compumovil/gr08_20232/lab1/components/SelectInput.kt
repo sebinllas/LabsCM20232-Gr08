@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr08_20232.lab1.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -17,6 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +36,7 @@ fun <T> SelectInput(
     isError: Boolean = false,
 ) {
     var expanded: Boolean by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
 
     Box(
         modifier = modifier.wrapContentSize(Alignment.TopStart)
@@ -42,7 +46,7 @@ fun <T> SelectInput(
                 .fillMaxWidth()
                 .clickable { expanded = !expanded }
                 .onFocusChanged { if (it.isFocused) expanded = !expanded },
-            value = if(selectedItem == null) "" else textValueFactory(selectedItem),
+            value = if (selectedItem == null) "" else textValueFactory(selectedItem),
             onValueChange = {},
             readOnly = true,
             trailingIcon = {
@@ -57,14 +61,20 @@ fun <T> SelectInput(
 
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false },
+            onDismissRequest = {
+                expanded = false
+                focusManager.clearFocus()
+            },
             modifier = dropDownModifier
+                .heightIn(40.dp, 300.dp)
+                .fillMaxWidth()
         ) {
             items.forEachIndexed { index, element ->
                 DropdownMenuItem(
                     text = { itemFactory(element, index) },
                     onClick = {
                         onItemSelected(items[index])
+                        focusManager.clearFocus()
                         expanded = false
                     }
                 )

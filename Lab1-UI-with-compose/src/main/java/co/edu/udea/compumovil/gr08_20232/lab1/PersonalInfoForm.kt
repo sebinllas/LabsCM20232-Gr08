@@ -1,6 +1,5 @@
 package co.edu.udea.compumovil.gr08_20232.lab1
 
-import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +28,7 @@ import co.edu.udea.compumovil.gr08_20232.lab1.components.RadioSelectInput
 import co.edu.udea.compumovil.gr08_20232.lab1.components.SelectInput
 
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(34)
 @Composable
 fun PersonalInfoForm(personViewModel: PersonViewModel) {
 
@@ -115,3 +114,4 @@ fun PersonalInfoForm(personViewModel: PersonViewModel) {
         )
     }
 }
+

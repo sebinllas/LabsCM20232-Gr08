@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -34,7 +34,7 @@ fun <T> RadioSelectInput(
             .padding(vertical = 8.dp)
             .border(
                 OutlinedTextFieldDefaults.UnfocusedBorderThickness,
-                Color.Gray,
+                MaterialTheme.colorScheme.outline,
                 OutlinedTextFieldDefaults.shape
             )
             .padding(5.dp)

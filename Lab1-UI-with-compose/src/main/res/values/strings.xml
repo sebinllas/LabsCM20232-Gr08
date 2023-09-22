@@ -25,4 +25,45 @@
     <string name="address_label">Dirección</string>
     <string name="info_summary">Resumen</string>
     <string name="invalid_fields_message">Los siguientes campos son inválidos: %1$s</string>
+    <string name="dismiss_text">Cancelar</string>
+    <string-array name="countries">
+        <item>Argentina</item>
+        <item>Bolivia</item>
+        <item>Brasil</item>
+        <item>Canadá</item>
+        <item>Chile</item>
+        <item>Colombia</item>
+        <item>Costa Rica</item>
+        <item>Cuba</item>
+        <item>Ecuador</item>
+        <item>El Salvador</item>
+        <item>Estados Unidos</item>
+        <item>Guatemala</item>
+        <item>Guyana</item>
+        <item>Haití</item>
+        <item>Honduras</item>
+        <item>Jamaica</item>
+        <item>México</item>
+        <item>Nicaragua</item>
+        <item>Panamá</item>
+        <item>Paraguay</item>
+        <item>Perú</item>
+        <item>Puerto Rico</item>
+        <item>República Dominicana</item>
+        <item>Uruguay</item>
+        <item>Venezuela</item>
+    </string-array>
+    <string-array name="colombian_cities">
+        <item>Bogotá</item>
+        <item>Medellín</item>
+        <item>Cali</item>
+        <item>Barranquilla</item>
+        <item>Cartagena</item>
+        <item>Bucaramanga</item>
+        <item>Cúcuta</item>
+        <item>Pereira</item>
+        <item>Santa Marta</item>
+        <item>Manizales</item>
+    </string-array>
+    <string name="confirm_text">OK</string>
 </resources>

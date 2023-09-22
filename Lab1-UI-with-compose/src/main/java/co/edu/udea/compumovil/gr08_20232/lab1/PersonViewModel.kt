@@ -48,6 +48,7 @@ data class User(
 }
 
 class PersonViewModel : ViewModel() {
+
     private val _user = MutableLiveData<User>()
     var user: LiveData<User> = _user
 
@@ -57,6 +58,13 @@ class PersonViewModel : ViewModel() {
 
     private val _contactInfoNextClicked = MutableLiveData(false)
     var contactInfoNextClicked: LiveData<Boolean> = _contactInfoNextClicked
+
+    fun getCitySuggestions(): Int? {
+        if (user.value?.country == "Colombia") {
+            return R.array.colombian_cities
+        }
+        return null
+    }
 
     fun setUser(it: User) {
         _user.value = it

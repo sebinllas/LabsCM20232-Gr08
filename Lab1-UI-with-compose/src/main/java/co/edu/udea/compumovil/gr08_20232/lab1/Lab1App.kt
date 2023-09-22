@@ -2,7 +2,6 @@ package co.edu.udea.compumovil.gr08_20232.lab1
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -27,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,35 +39,8 @@ enum class Screens(@StringRes val resourceId: Int) {
     InfoSummary(R.string.info_summary)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Lab1AppBar(
-    canNavigateBack: Boolean,
-    navigateUp: () -> Unit,
-    modifier: Modifier = Modifier,
-    currentScreen: String
-) {
-    TopAppBar(
-        title = { Text(currentScreen) },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        ),
-        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "back"
-                    )
-                }
-            }
-        }
-    )
-}
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(34)
 @Composable
 fun Lab1App(
     modifier: Modifier = Modifier,
@@ -83,7 +56,7 @@ fun Lab1App(
             NavHost(
                 navController = navController,
                 startDestination = Screens.PersonalInfo.name,
-                modifier = modifier.padding(innerPadding)
+                modifier = modifier.padding(innerPadding).padding(10.dp)
             ) {
 
                 composable(route = Screens.PersonalInfo.name) {
@@ -127,6 +100,33 @@ fun Lab1App(
     )
 
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Lab1AppBar(
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
+    currentScreen: String
+) {
+    TopAppBar(
+        title = { Text(currentScreen) },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier,
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "back"
+                    )
+                }
+            }
+        }
+    )
 }
 
 @Composable
