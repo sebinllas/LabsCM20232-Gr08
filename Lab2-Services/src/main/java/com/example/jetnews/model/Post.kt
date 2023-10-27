@@ -17,6 +17,7 @@
 package com.example.jetnews.model
 
 import androidx.annotation.DrawableRes
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class Post(
@@ -35,7 +36,12 @@ data class Post(
     val paragraphs: List<Paragraph> = emptyList(),
     val imageId: String,
     val imageThumbId: String
-)
+){
+    fun toJson(): String {
+        val gson = Gson()
+        return gson.toJson(this)
+    }
+}
 
 data class Metadata(
     val author: PostAuthor,

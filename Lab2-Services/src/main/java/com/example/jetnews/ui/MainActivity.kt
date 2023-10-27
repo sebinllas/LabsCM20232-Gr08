@@ -16,13 +16,16 @@
 
 package com.example.jetnews.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.example.jetnews.JetnewsApplication
+import com.example.jetnews.NotificationService
 
 class MainActivity : ComponentActivity() {
 
@@ -36,5 +39,16 @@ class MainActivity : ComponentActivity() {
             val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
             JetnewsApp(appContainer, widthSizeClass)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val service = Intent(this, NotificationService::class.java)
+        ContextCompat.startForegroundService(this, service)
+    }
+    override fun onPause() {
+        super.onPause()
+        val service = Intent(this, NotificationService::class.java)
+        ContextCompat.startForegroundService(this, service)
     }
 }

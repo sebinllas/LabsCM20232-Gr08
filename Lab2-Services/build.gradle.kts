@@ -155,6 +155,9 @@ dependencies {
     //images from internet
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    //permission request
+    implementation("com.google.accompanist:accompanist-permissions:0.29.0-alpha")
+
 }
 
 tasks.withType<Test>().configureEach {

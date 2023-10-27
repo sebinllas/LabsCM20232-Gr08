@@ -19,6 +19,7 @@ package com.example.jetnews.ui.article
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,6 +64,7 @@ import com.example.jetnews.data.posts.impl.post3
 import com.example.jetnews.model.Post
 import com.example.jetnews.ui.theme.JetnewsTheme
 import com.example.jetnews.ui.utils.BookmarkButton
+import com.example.jetnews.ui.utils.DownloadButton
 import com.example.jetnews.ui.utils.FavoriteButton
 import com.example.jetnews.ui.utils.ShareButton
 import com.example.jetnews.ui.utils.TextSettingsButton
@@ -119,6 +121,7 @@ fun ArticleScreen(
                             BookmarkButton(isBookmarked = isFavorite, onClick = onToggleFavorite)
                             ShareButton(onClick = { sharePost(post, context) })
                             TextSettingsButton(onClick = { showUnimplementedActionDialog = true })
+                            DownloadButton(onClick = { Log.d("post-debug", post.toJson()) })
                         }
                     )
                 }

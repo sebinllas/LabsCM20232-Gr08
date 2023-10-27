@@ -19,6 +19,7 @@ package com.example.jetnews.ui.utils
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbUpOffAlt
 import androidx.compose.material3.Icon
@@ -31,6 +32,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import com.example.jetnews.R
+
+@Composable
+fun DownloadButton(onClick: () -> Unit) {
+    IconButton(onClick) {
+        Icon(
+            imageVector = Icons.Filled.Download,
+            contentDescription = stringResource(R.string.cd_add_to_favorites)
+        )
+    }
+}
 
 @Composable
 fun FavoriteButton(onClick: () -> Unit) {
