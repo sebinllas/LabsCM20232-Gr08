@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.compose.ui.res.stringResource
 import androidx.core.app.NotificationCompat
 import com.example.jetnews.ui.MainActivity
 
@@ -53,8 +54,8 @@ class NotificationService : Service() {
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         Log.d("NotificationService", "buildNotification")
         return NotificationCompat.Builder(this, "channel_id")
-            .setContentTitle("¡Vuelve pronto!")
-            .setContentText("Lamentamos que te vayas, pero puedes volver cuando quieras.")
+            .setContentTitle(getString(R.string.on_close_notification_title))
+            .setContentText(getString(R.string.on_close_notification_text))
             .setSmallIcon(R.drawable.ic_jetnews_logo)
             .setContentIntent(pendingIntent)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
