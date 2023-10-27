@@ -101,7 +101,7 @@ fun HomeRoute(
     // we get to preserve the scroll throughout any changes to the content.
     val homeListLazyListState = rememberLazyListState()
     val articleDetailLazyListStates = when (uiState) {
-        is HomeUiState.HasPosts -> uiState.postsFeed.allPosts
+        is HomeUiState.HasPosts -> uiState.postsFeed.getAllPosts()
         is HomeUiState.NoPosts -> emptyList()
     }.associate { post ->
         key(post.id) {

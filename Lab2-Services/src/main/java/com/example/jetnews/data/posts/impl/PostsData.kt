@@ -946,8 +946,8 @@ val post1 = Post(
         readTimeMinutes = 1
     ),
     paragraphs = paragraphsPost1,
-    imageId = R.drawable.post_1,
-    imageThumbId = R.drawable.post_1_thumb
+    imageId = "https://picsum.photos/500/500",
+    imageThumbId = "https://picsum.photos/500/500"
 )
 
 val post2 = Post(
@@ -962,8 +962,8 @@ val post2 = Post(
         readTimeMinutes = 3
     ),
     paragraphs = paragraphsPost2,
-    imageId = R.drawable.post_2,
-    imageThumbId = R.drawable.post_2_thumb
+    imageId = "https://picsum.photos/500/500",
+    imageThumbId = "https://picsum.photos/500/500"
 )
 
 val post3 = Post(
@@ -978,8 +978,8 @@ val post3 = Post(
         readTimeMinutes = 1
     ),
     paragraphs = paragraphsPost3,
-    imageId = R.drawable.post_3,
-    imageThumbId = R.drawable.post_3_thumb
+    imageId = "https://picsum.photos/500/500",
+    imageThumbId = "https://picsum.photos/500/500"
 )
 
 val post4 = Post(
@@ -994,8 +994,8 @@ val post4 = Post(
         readTimeMinutes = 1
     ),
     paragraphs = paragraphsPost4,
-    imageId = R.drawable.post_4,
-    imageThumbId = R.drawable.post_4_thumb
+    imageId = "https://picsum.photos/500/500",
+    imageThumbId = "https://picsum.photos/500/500"
 )
 
 val post5 = Post(
@@ -1010,8 +1010,8 @@ val post5 = Post(
         readTimeMinutes = 4
     ),
     paragraphs = paragraphsPost5,
-    imageId = R.drawable.post_5,
-    imageThumbId = R.drawable.post_5_thumb
+    imageId = "https://picsum.photos/500/500",
+    imageThumbId = "https://picsum.photos/500/500"
 )
 
 val posts: PostsFeed =

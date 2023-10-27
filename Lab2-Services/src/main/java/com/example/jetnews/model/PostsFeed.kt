@@ -28,6 +28,7 @@ data class PostsFeed(
     /**
      * Returns a flattened list of all posts contained in the feed.
      */
-    val allPosts: List<Post> =
-        listOf(highlightedPost) + recommendedPosts + popularPosts + recentPosts
+    fun getAllPosts(): List<Post> {
+        return listOf(highlightedPost) + recommendedPosts + popularPosts + recentPosts
+    }
 }

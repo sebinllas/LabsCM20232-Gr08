@@ -147,6 +147,14 @@ dependencies {
     // Robolectric dependencies
     testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.robolectric)
+
+    //api consumption
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.6.4")
+
+    //images from internet
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
 }
 
 tasks.withType<Test>().configureEach {

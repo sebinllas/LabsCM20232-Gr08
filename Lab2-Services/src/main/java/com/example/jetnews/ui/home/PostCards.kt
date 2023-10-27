@@ -47,6 +47,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.jetnews.R
 import com.example.jetnews.data.posts.impl.post3
 import com.example.jetnews.model.Post
@@ -74,8 +75,9 @@ fun AuthorAndReadTime(
 
 @Composable
 fun PostImage(post: Post, modifier: Modifier = Modifier) {
-    Image(
-        painter = painterResource(post.imageThumbId),
+    AsyncImage(
+        model = post.imageId,
+        error = painterResource(R.drawable.post_1),
         contentDescription = null, // decorative
         modifier = modifier
             .size(40.dp, 40.dp)

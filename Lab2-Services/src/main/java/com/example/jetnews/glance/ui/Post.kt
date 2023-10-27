@@ -43,6 +43,7 @@ import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.Text
+import coil.compose.AsyncImage
 import com.example.jetnews.JetnewsApplication.Companion.JETNEWS_APP_URI
 import com.example.jetnews.R
 import com.example.jetnews.glance.ui.theme.JetnewsGlanceTextStyles
@@ -201,15 +202,13 @@ fun BookmarkButton(id: String, isBookmarked: Boolean, onToggleBookmark: (String)
 
 @Composable
 fun PostImage(
-    imageId: Int,
+    imageId: String,
     contentScale: ContentScale = ContentScale.Crop,
     modifier: GlanceModifier = GlanceModifier
 ) {
-    Image(
-        provider = ImageProvider(imageId),
-        contentScale = contentScale,
+    AsyncImage(
+        model = imageId,
         contentDescription = null,
-        modifier = modifier.cornerRadius(5.dp)
     )
 }
 

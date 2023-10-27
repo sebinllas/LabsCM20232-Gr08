@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.jetnews.R
 import com.example.jetnews.data.posts.impl.posts
 import com.example.jetnews.model.Post
@@ -53,8 +54,8 @@ fun PostCardTop(post: Post, modifier: Modifier = Modifier) {
             .heightIn(min = 180.dp)
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.medium)
-        Image(
-            painter = painterResource(post.imageId),
+        AsyncImage(
+            model = post.imageId,
             contentDescription = null, // decorative
             modifier = imageModifier,
             contentScale = ContentScale.Crop

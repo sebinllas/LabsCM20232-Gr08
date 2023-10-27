@@ -811,7 +811,7 @@ fun PreviewHomeListDetailScreen() {
             onInteractWithDetail = {},
             openDrawer = {},
             homeListLazyListState = rememberLazyListState(),
-            articleDetailLazyListStates = postsFeed.allPosts.associate { post ->
+            articleDetailLazyListStates = postsFeed.getAllPosts().associate { post ->
                 key(post.id) {
                     post.id to rememberLazyListState()
                 }

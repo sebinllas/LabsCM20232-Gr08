@@ -20,6 +20,8 @@ import android.content.Context
 import com.example.jetnews.data.interests.InterestsRepository
 import com.example.jetnews.data.interests.impl.FakeInterestsRepository
 import com.example.jetnews.data.posts.PostsRepository
+import com.example.jetnews.data.posts.PostsService
+import com.example.jetnews.data.posts.impl.ApiPostsRepository
 import com.example.jetnews.data.posts.impl.FakePostsRepository
 
 /**
@@ -38,7 +40,7 @@ interface AppContainer {
 class AppContainerImpl(private val applicationContext: Context) : AppContainer {
 
     override val postsRepository: PostsRepository by lazy {
-        FakePostsRepository()
+        ApiPostsRepository(PostsService.instanace)
     }
 
     override val interestsRepository: InterestsRepository by lazy {
