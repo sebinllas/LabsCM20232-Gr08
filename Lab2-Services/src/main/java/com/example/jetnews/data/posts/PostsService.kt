@@ -8,7 +8,7 @@ import retrofit2.http.GET
 
 interface PostsService {
     companion object {
-        private const val BASE_URL = "http://192.168.1.21:3000/"
+        private const val BASE_URL = "http://172.17.0.1:3000/"
         val instanace: PostsService = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

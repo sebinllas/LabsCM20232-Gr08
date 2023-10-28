@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Jetnews</string>
+    <string name="load_error">No se puede actualizar las últimas noticias</string>
+    <string name="retry">Reintentar</string>
+    <string name="cd_download">Descargar</string>
+    <string name="cd_add_to_favorites">Agregar a favoritos</string>
+    <string name="cd_share">Compartir</string>
+    <string name="cd_text_settings">Ajustes de texto</string>
+    <string name="cd_open_navigation_drawer">Abrir el menú de navegación</string>
+    <string name="cd_more_actions">Más acciones</string>
+    <string name="unbookmark">Eliminar de favoritos</string>
+    <string name="bookmark">Agregar a favoritos</string>
+    <string name="cd_search">Buscar</string>
+    <string name="cd_interests">Intereses</string>
+    <string name="published_in">Publicado en: \n%1$s</string>
+    <string name="fewer_stories">¿Mostrar menos historias como esta?</string>
+    <string name="fewer_stories_content">Esta función aún no está implementada</string>
+    <string name="agree">Aceptar</string>
+    <string name="close">Cerrar</string>
+
+    <!-- Pantalla de inicio -->
+    <string name="home_title">Inicio</string>
+    <string name="home_tap_to_load_content">Toque para cargar contenido</string>
+    <string name="home_top_section_title">Las mejores historias para ti</string>
+    <string name="home_popular_section_title">Popular en Jetnews</string>
+    <string name="home_post_min_read">%1$s - %2$d min de lectura</string>
+    <string name="home_post_based_on_history">BASADO EN TU HISTORIAL</string>
+    <string name="home_search">Buscar artículos</string>
+
+    <!-- Pantalla de artículo -->
+    <string name="article_functionality_not_available">Funcionalidad no disponible \uD83D\uDE48</string>
+    <string name="article_share_post">Compartir artículo</string>
+    <string name="article_post_min_read">%1$s • %2$d min de lectura</string>
+
+    <!-- Pantalla de intereses -->
+    <string name="interests_title">Intereses</string>
+    <string name="interests_section_topics">Temas</string>
+    <string name="interests_section_people">Personas</string>
+    <string name="interests_section_publications">Publicaciones</string>
+
+    <!-- Acciones de navegación -->
+    <string name="cd_navigate_up">Navegar hacia arriba</string>
+    <string name="cd_navigate_home">Navegar a la pantalla de inicio</string>
+    <string name="cd_navigate_interests">Navegar a la pantalla de intereses</string>
+    <string name="on_close_notification_title">¡Vuelve pronto!</string>
+    <string name="on_close_notification_text">Lamentamos verte ir, pero puedes regresar en cualquier momento</string>
+
+</resources>
