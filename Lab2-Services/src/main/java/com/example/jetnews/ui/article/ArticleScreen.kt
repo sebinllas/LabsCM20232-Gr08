@@ -38,8 +38,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
@@ -54,6 +56,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -94,9 +97,17 @@ fun ArticleScreen(
     lazyListState: LazyListState = rememberLazyListState()
 ) {
     var showUnimplementedActionDialog by rememberSaveable { mutableStateOf(false) }
+    var showChangeFontDialog by rememberSaveable { mutableStateOf(false) }
+    var fontSizeFactor by rememberSaveable { mutableStateOf(1.0) }
     var context = LocalContext.current;
     if (showUnimplementedActionDialog) {
         FunctionalityNotAvailablePopup { showUnimplementedActionDialog = false }
+    }
+    if (showChangeFontDialog) {
+        ChangeFontPopUp(
+            onDismiss = { showChangeFontDialog = false },
+            value = fontSizeFactor.toFloat(),
+            onValueChange = { fontSizeFactor = it.toDouble() })
     }
 
     Row(modifier.fillMaxSize()) {
@@ -123,9 +134,9 @@ fun ArticleScreen(
                             FavoriteButton(onClick = { showUnimplementedActionDialog = true })
                             BookmarkButton(isBookmarked = isFavorite, onClick = onToggleFavorite)
                             ShareButton(onClick = { sharePost(post, context) })
-                            TextSettingsButton(onClick = { showUnimplementedActionDialog = true })
+                            TextSettingsButton(onClick = { showChangeFontDialog = true })
                             DownloadButton(onClick = {
-                                val intent=Intent(context, FileSaveService::class.java)
+                                val intent = Intent(context, FileSaveService::class.java)
                                 intent.putExtra("file_name", post.title)
                                 intent.putExtra("file_content", post.toJson())
                                 context.startService(intent)
@@ -222,6 +233,21 @@ private fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
                 text = stringResource(id = R.string.article_functionality_not_available),
                 style = MaterialTheme.typography.bodyLarge
             )
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.close))
+            }
+        }
+    )
+}
+
+@Composable
+private fun ChangeFontPopUp(onDismiss: () -> Unit, value: Float, onValueChange: (Float) -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        text = {
+            Slider(value = value, onValueChange = onValueChange, valueRange = 0.5f..3f )
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
