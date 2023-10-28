@@ -38,7 +38,7 @@ fun DownloadButton(onClick: () -> Unit) {
     IconButton(onClick) {
         Icon(
             imageVector = Icons.Filled.Download,
-            contentDescription = stringResource(R.string.cd_add_to_favorites)
+            contentDescription = stringResource(R.string.cd_download)
         )
     }
 }

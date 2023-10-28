@@ -57,6 +57,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import com.example.jetnews.FileSaveService
 import com.example.jetnews.R
 import com.example.jetnews.data.Result
 import com.example.jetnews.data.posts.impl.BlockingFakePostsRepository
@@ -92,6 +94,7 @@ fun ArticleScreen(
     lazyListState: LazyListState = rememberLazyListState()
 ) {
     var showUnimplementedActionDialog by rememberSaveable { mutableStateOf(false) }
+    var context = LocalContext.current;
     if (showUnimplementedActionDialog) {
         FunctionalityNotAvailablePopup { showUnimplementedActionDialog = false }
     }
@@ -121,7 +124,12 @@ fun ArticleScreen(
                             BookmarkButton(isBookmarked = isFavorite, onClick = onToggleFavorite)
                             ShareButton(onClick = { sharePost(post, context) })
                             TextSettingsButton(onClick = { showUnimplementedActionDialog = true })
-                            DownloadButton(onClick = { Log.d("post-debug", post.toJson()) })
+                            DownloadButton(onClick = {
+                                val intent=Intent(context, FileSaveService::class.java)
+                                intent.putExtra("file_name", post.title)
+                                intent.putExtra("file_content", post.toJson())
+                                context.startService(intent)
+                            })
                         }
                     )
                 }
