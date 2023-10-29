@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ListAlt
+import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,6 +47,7 @@ fun AppDrawer(
     currentRoute: String,
     navigateToHome: () -> Unit,
     navigateToInterests: () -> Unit,
+    navigateToDownloads: () -> Unit,
     closeDrawer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -65,6 +67,13 @@ fun AppDrawer(
             icon = { Icon(Icons.Filled.ListAlt, null) },
             selected = currentRoute == JetnewsDestinations.INTERESTS_ROUTE,
             onClick = { navigateToInterests(); closeDrawer() },
+            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+        )
+        NavigationDrawerItem(
+            label = { Text(stringResource(id = R.string.downloads_title)) },
+            icon = { Icon(Icons.Filled.SaveAlt, null) },
+            selected = currentRoute == JetnewsDestinations.DOWNLOADS_ROUTE,
+            onClick = { navigateToDownloads(); closeDrawer() },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
     }
@@ -96,6 +105,7 @@ fun PreviewAppDrawer() {
             currentRoute = JetnewsDestinations.HOME_ROUTE,
             navigateToHome = {},
             navigateToInterests = {},
+            navigateToDownloads = {},
             closeDrawer = { }
         )
     }

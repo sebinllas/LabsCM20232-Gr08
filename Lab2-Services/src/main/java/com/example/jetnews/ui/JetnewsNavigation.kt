@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 object JetnewsDestinations {
     const val HOME_ROUTE = "home"
     const val INTERESTS_ROUTE = "interests"
+    const val DOWNLOADS_ROUTE = "downloads"
 }
 
 /**
@@ -49,6 +50,16 @@ class JetnewsNavigationActions(navController: NavHostController) {
     val navigateToInterests: () -> Unit = {
         navController.navigate(JetnewsDestinations.INTERESTS_ROUTE) {
             popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    val navigateToDownloads: ()->Unit ={
+        navController.navigate(JetnewsDestinations.DOWNLOADS_ROUTE){
+            popUpTo(navController.graph.findStartDestination().id){
                 saveState = true
             }
             launchSingleTop = true

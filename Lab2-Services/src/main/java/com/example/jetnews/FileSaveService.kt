@@ -2,9 +2,9 @@ package com.example.jetnews
 
 import android.app.IntentService
 import android.content.Intent
+import android.widget.Toast
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 
 class FileSaveService : IntentService("FileSaveService") {
 
@@ -25,8 +25,19 @@ class FileSaveService : IntentService("FileSaveService") {
             val fos = FileOutputStream(file)
             fos.write(fileContent.toByteArray())
             fos.close()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            Toast.makeText(
+                JetnewsApplication.applicationContext(),
+                getString(R.string.file_save_error),
+                Toast.LENGTH_SHORT
+            ).show()
+        } finally {
+            Toast.makeText(
+                JetnewsApplication.applicationContext(),
+                getString(R.string.file_saved_success),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

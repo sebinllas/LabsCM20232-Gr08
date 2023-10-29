@@ -26,6 +26,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import com.example.jetnews.JetnewsApplication.Companion.JETNEWS_APP_URI
 import com.example.jetnews.data.AppContainer
+import com.example.jetnews.ui.downloads.DownloadsRoute
+import com.example.jetnews.ui.downloads.DownloadsViewModel
 import com.example.jetnews.ui.home.HomeRoute
 import com.example.jetnews.ui.home.HomeViewModel
 import com.example.jetnews.ui.interests.InterestsRoute
@@ -74,6 +76,15 @@ fun JetnewsNavGraph(
             )
             InterestsRoute(
                 interestsViewModel = interestsViewModel,
+                isExpandedScreen = isExpandedScreen,
+                openDrawer = openDrawer
+            )
+        }
+        composable(JetnewsDestinations.DOWNLOADS_ROUTE) {
+            DownloadsRoute(
+                downloadsViewModel= viewModel(
+                    factory = DownloadsViewModel.provideFactory(appContainer.downloadedPostsRepository)
+                ),
                 isExpandedScreen = isExpandedScreen,
                 openDrawer = openDrawer
             )

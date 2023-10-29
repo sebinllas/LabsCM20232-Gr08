@@ -17,12 +17,23 @@
 package com.example.jetnews
 
 import android.app.Application
+import android.content.Context
 import com.example.jetnews.data.AppContainer
 import com.example.jetnews.data.AppContainerImpl
 
 class JetnewsApplication : Application() {
+    init {
+        instance = this
+    }
+
     companion object {
         const val JETNEWS_APP_URI = "https://developer.android.com/jetnews"
+
+        private var instance: JetnewsApplication? = null
+
+        fun applicationContext() : Context {
+            return instance!!.applicationContext
+        }
     }
 
     // AppContainer instance used by the rest of classes to obtain dependencies
@@ -31,5 +42,6 @@ class JetnewsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainerImpl(this)
+        val context: Context = JetnewsApplication.applicationContext()
     }
 }

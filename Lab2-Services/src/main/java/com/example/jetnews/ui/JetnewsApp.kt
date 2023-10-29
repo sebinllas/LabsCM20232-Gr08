@@ -70,6 +70,7 @@ fun JetnewsApp(
                     currentRoute = currentRoute,
                     navigateToHome = navigationActions.navigateToHome,
                     navigateToInterests = navigationActions.navigateToInterests,
+                    navigateToDownloads = navigationActions.navigateToDownloads,
                     closeDrawer = { coroutineScope.launch { sizeAwareDrawerState.close() } }
                 )
             },

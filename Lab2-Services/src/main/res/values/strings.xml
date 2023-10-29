@@ -58,5 +58,10 @@
     <string name="cd_navigate_interests">Navigate to the interests screen</string>
     <string name="on_close_notification_title">Come back soon!</string>
     <string name="on_close_notification_text">We\'re sorry to see you go, but you can come back anytime</string>
+    <string name="downloads_title">Downloads</string>
+    <string name="favorites_not_available_message">This functionality is not available in this context</string>
+    <string name="file_save_error">Error saving post as file!</string>
+    <string name="file_saved_success">Post saved sucessfully!</string>
+    <string name="cd_downloads">Downloads</string>
 
 </resources>

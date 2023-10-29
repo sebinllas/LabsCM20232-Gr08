@@ -135,12 +135,13 @@ fun ArticleScreen(
                             BookmarkButton(isBookmarked = isFavorite, onClick = onToggleFavorite)
                             ShareButton(onClick = { sharePost(post, context) })
                             TextSettingsButton(onClick = { showChangeFontDialog = true })
-                            DownloadButton(onClick = {
+                            DownloadButton {
                                 val intent = Intent(context, FileSaveService::class.java)
                                 intent.putExtra("file_name", post.title)
                                 intent.putExtra("file_content", post.toJson())
                                 context.startService(intent)
-                            })
+
+                            }
                         }
                     )
                 }

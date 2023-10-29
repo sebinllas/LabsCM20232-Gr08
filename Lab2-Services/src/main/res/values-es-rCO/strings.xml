@@ -46,5 +46,10 @@
     <string name="cd_navigate_interests">Navegar a la pantalla de intereses</string>
     <string name="on_close_notification_title">¡Vuelve pronto!</string>
     <string name="on_close_notification_text">Lamentamos verte ir, pero puedes regresar en cualquier momento</string>
+    <string name="downloads_title">Descargas</string>
+    <string name="favorites_not_available_message">Esta funcionalidad no está disponible en este contexto</string>
+    <string name="file_save_error">Error guardando la publicación</string>
+    <string name="file_saved_success">Publicación guardada existosamente</string>
+    <string name="cd_downloads">Descargas</string>
 
 </resources>
