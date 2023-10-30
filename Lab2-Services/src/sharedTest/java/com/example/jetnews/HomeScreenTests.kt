@@ -22,10 +22,10 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.jetnews.ui.home.HomeFeedScreen
-import com.example.jetnews.ui.home.HomeUiState
-import com.example.jetnews.ui.theme.JetnewsTheme
-import com.example.jetnews.utils.ErrorMessage
+import co.edu.udea.compumovil.gr08_20232.lab2.ui.home.HomeFeedScreen
+import co.edu.udea.compumovil.gr08_20232.lab2.ui.home.HomeUiState
+import co.edu.udea.compumovil.gr08_20232.lab2.ui.theme.JetnewsTheme
+import co.edu.udea.compumovil.gr08_20232.lab2.utils.ErrorMessage
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

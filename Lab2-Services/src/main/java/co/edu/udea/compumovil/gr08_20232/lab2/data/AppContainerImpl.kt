@@ -14,22 +14,42 @@
  * limitations under the License.
  */
 
-package com.example.jetnews
+package co.edu.udea.compumovil.gr08_20232.lab2.data
 
 import android.content.Context
-import co.edu.udea.compumovil.gr08_20232.lab2.data.AppContainer
 import co.edu.udea.compumovil.gr08_20232.lab2.data.interests.InterestsRepository
 import co.edu.udea.compumovil.gr08_20232.lab2.data.interests.impl.FakeInterestsRepository
+import co.edu.udea.compumovil.gr08_20232.lab2.data.posts.DownloadedPostsRepository
 import co.edu.udea.compumovil.gr08_20232.lab2.data.posts.PostsRepository
-import co.edu.udea.compumovil.gr08_20232.lab2.data.posts.impl.BlockingFakePostsRepository
+import co.edu.udea.compumovil.gr08_20232.lab2.data.posts.PostsService
+import co.edu.udea.compumovil.gr08_20232.lab2.data.posts.impl.ApiPostsRepository
+import co.edu.udea.compumovil.gr08_20232.lab2.data.posts.impl.DownloadedPostsRepositoryImpl
 
-class TestAppContainer(private val context: Context) : AppContainer {
+
+/**
+ * Dependency Injection container at the application level.
+ */
+interface AppContainer {
+    val postsRepository: PostsRepository
+    val interestsRepository: InterestsRepository
+    val downloadedPostsRepository: DownloadedPostsRepository
+}
+
+/**
+ * Implementation for the Dependency Injection container at the application level.
+ *
+ * Variables are initialized lazily and the same instance is shared across the whole app.
+ */
+class AppContainerImpl(private val applicationContext: Context) : AppContainer {
 
     override val postsRepository: PostsRepository by lazy {
-        BlockingFakePostsRepository()
+        ApiPostsRepository(PostsService.instanace)
     }
-
     override val interestsRepository: InterestsRepository by lazy {
         FakeInterestsRepository()
     }
+    override val downloadedPostsRepository: DownloadedPostsRepository by lazy {
+        DownloadedPostsRepositoryImpl()
+    }
+
 }

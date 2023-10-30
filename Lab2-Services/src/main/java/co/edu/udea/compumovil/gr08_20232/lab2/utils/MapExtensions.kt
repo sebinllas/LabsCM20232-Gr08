@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package com.example.jetnews
+package co.edu.udea.compumovil.gr08_20232.lab2.utils
 
-import android.content.Context
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
-import co.edu.udea.compumovil.gr08_20232.lab2.ui.JetnewsApp
-
-/**
- * Launches the app from a test context
- */
-fun ComposeContentTestRule.launchJetNewsApp(context: Context) {
-    setContent {
-        JetnewsApp(
-            appContainer = TestAppContainer(context),
-            widthSizeClass = WindowWidthSizeClass.Compact
-        )
-    }
+internal fun <E> Set<E>.addOrRemove(element: E): Set<E> {
+    return this.toMutableSet().apply {
+        if (!add(element)) {
+            remove(element)
+        }
+    }.toSet()
 }

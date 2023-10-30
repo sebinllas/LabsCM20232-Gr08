@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 The Android Open Source Project
+ * Copyright 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.example.jetnews
-
-import android.content.Context
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
-import co.edu.udea.compumovil.gr08_20232.lab2.ui.JetnewsApp
+package co.edu.udea.compumovil.gr08_20232.lab2.model
 
 /**
- * Launches the app from a test context
+ * A container of [Post]s, partitioned into different categories.
  */
-fun ComposeContentTestRule.launchJetNewsApp(context: Context) {
-    setContent {
-        JetnewsApp(
-            appContainer = TestAppContainer(context),
-            widthSizeClass = WindowWidthSizeClass.Compact
-        )
+data class PostsFeed(
+    val highlightedPost: Post,
+    val recommendedPosts: List<Post>,
+    val popularPosts: List<Post>,
+    val recentPosts: List<Post>,
+) {
+    /**
+     * Returns a flattened list of all posts contained in the feed.
+     */
+    fun getAllPosts(): List<Post> {
+        return listOf(highlightedPost) + recommendedPosts + popularPosts + recentPosts
     }
 }

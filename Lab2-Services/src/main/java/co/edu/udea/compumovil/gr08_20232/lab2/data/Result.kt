@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package com.example.jetnews
-
-import android.content.Context
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
-import co.edu.udea.compumovil.gr08_20232.lab2.ui.JetnewsApp
+package co.edu.udea.compumovil.gr08_20232.lab2.data
 
 /**
- * Launches the app from a test context
+ * A generic class that holds a value or an exception
  */
-fun ComposeContentTestRule.launchJetNewsApp(context: Context) {
-    setContent {
-        JetnewsApp(
-            appContainer = TestAppContainer(context),
-            widthSizeClass = WindowWidthSizeClass.Compact
-        )
-    }
+sealed class Result<out R> {
+    data class Success<out T>(val data: T) : Result<T>()
+    data class Error(val exception: Exception) : Result<Nothing>()
+}
+
+fun <T> Result<T>.successOr(fallback: T): T {
+    return (this as? Result.Success<T>)?.data ?: fallback
 }
