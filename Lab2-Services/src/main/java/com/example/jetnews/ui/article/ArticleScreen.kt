@@ -19,8 +19,8 @@ package com.example.jetnews.ui.article
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,12 +41,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -56,11 +56,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import com.example.jetnews.FileSaveService
 import com.example.jetnews.R
 import com.example.jetnews.data.Result
@@ -98,7 +99,7 @@ fun ArticleScreen(
 ) {
     var showUnimplementedActionDialog by rememberSaveable { mutableStateOf(false) }
     var showChangeFontDialog by rememberSaveable { mutableStateOf(false) }
-    var fontSizeFactor by rememberSaveable { mutableStateOf(1.0) }
+    var fontScaleFactor by rememberSaveable { mutableFloatStateOf(1.0f) }
     var context = LocalContext.current;
     if (showUnimplementedActionDialog) {
         FunctionalityNotAvailablePopup { showUnimplementedActionDialog = false }
@@ -106,14 +107,15 @@ fun ArticleScreen(
     if (showChangeFontDialog) {
         ChangeFontPopUp(
             onDismiss = { showChangeFontDialog = false },
-            value = fontSizeFactor.toFloat(),
-            onValueChange = { fontSizeFactor = it.toDouble() })
+            value = fontScaleFactor.toFloat(),
+            onValueChange = { fontScaleFactor = it })
     }
 
     Row(modifier.fillMaxSize()) {
         val context = LocalContext.current
         ArticleScreenContent(
             post = post,
+            fontScaleFactor = fontScaleFactor,
             // Allow opening the Drawer if the screen is not expanded
             navigationIconContent = {
                 if (!isExpandedScreen) {
@@ -164,7 +166,8 @@ private fun ArticleScreenContent(
     post: Post,
     navigationIconContent: @Composable () -> Unit = { },
     bottomBarContent: @Composable () -> Unit = { },
-    lazyListState: LazyListState = rememberLazyListState()
+    lazyListState: LazyListState = rememberLazyListState(),
+    fontScaleFactor: Float = 1f
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
@@ -185,6 +188,7 @@ private fun ArticleScreenContent(
                 // innerPadding takes into account the top and bottom bar
                 .padding(innerPadding),
             state = lazyListState,
+            fontScaleFactor = fontScaleFactor
         )
     }
 }
@@ -248,7 +252,43 @@ private fun ChangeFontPopUp(onDismiss: () -> Unit, value: Float, onValueChange: 
     AlertDialog(
         onDismissRequest = onDismiss,
         text = {
-            Slider(value = value, onValueChange = onValueChange, valueRange = 0.5f..3f )
+            Column {
+                Text(
+                    stringResource(id = R.string.cd_text_settings),
+                    style = MaterialTheme.typography.bodyLarge.merge(
+                        TextStyle(
+                            fontSize = TextUnit(
+                                value * MaterialTheme.typography.bodyLarge.fontSize.value,
+                                TextUnitType.Sp
+                            )
+                        )
+                    ),
+                )
+                Slider(
+                    value = value,
+                    onValueChange = onValueChange,
+                    valueRange = 0.8f..1.4f,
+                    steps = 2
+                )
+                Text(
+                    when (value) {
+                        0.8f -> stringResource(id = R.string.small)
+                        1.0f -> stringResource(id = R.string.medium)
+                        1.2f -> stringResource(id = R.string.large)
+                        1.4f -> stringResource(id = R.string.extra_large)
+                        else -> stringResource(id = R.string.medium)
+                    },
+                    style = MaterialTheme.typography.bodyLarge.merge(
+                        TextStyle(
+                            fontSize = TextUnit(
+                                value * MaterialTheme.typography.bodyLarge.fontSize.value,
+                                TextUnitType.Sp
+                            )
+                        )
+                    ),
+                )
+
+            }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {

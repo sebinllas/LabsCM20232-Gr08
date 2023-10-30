@@ -52,7 +52,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
@@ -66,6 +65,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -85,18 +86,19 @@ private val defaultSpacerSize = 16.dp
 fun PostContent(
     post: Post,
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    fontScaleFactor: Float = 1.0f
 ) {
     LazyColumn(
         contentPadding = PaddingValues(defaultSpacerSize),
         modifier = modifier,
         state = state,
     ) {
-        postContentItems(post)
+        postContentItems(post, fontScaleFactor)
     }
 }
 
-fun LazyListScope.postContentItems(post: Post) {
+fun LazyListScope.postContentItems(post: Post, fontScaleFactor: Float = 1.0f) {
     item {
         PostHeaderImage(post)
         Spacer(Modifier.height(defaultSpacerSize))
@@ -108,7 +110,7 @@ fun LazyListScope.postContentItems(post: Post) {
         }
     }
     item { PostMetadata(post.metadata, Modifier.padding(bottom = 24.dp)) }
-    items(post.paragraphs) { Paragraph(paragraph = it) }
+    items(post.paragraphs) { Paragraph(paragraph = it, fontScaleFactor = fontScaleFactor) }
 }
 
 @Composable
@@ -118,22 +120,18 @@ private fun PostHeaderImage(post: Post) {
         .fillMaxWidth()
         .clip(shape = MaterialTheme.shapes.medium)
     AsyncImage(
-        model = post.imageId,
-        contentDescription = null, // decorative
-        modifier = imageModifier,
-        contentScale = ContentScale.Crop
+        model = post.imageId, contentDescription = null, // decorative
+        modifier = imageModifier, contentScale = ContentScale.Crop
     )
 }
 
 @Composable
 private fun PostMetadata(
-    metadata: Metadata,
-    modifier: Modifier = Modifier
+    metadata: Metadata, modifier: Modifier = Modifier
 ) {
     Row(
         // Merge semantics so accessibility services consider this row a single element
-        modifier = modifier.semantics(mergeDescendants = true) {}
-    ) {
+        modifier = modifier.semantics(mergeDescendants = true) {}) {
         Image(
             imageVector = Icons.Filled.AccountCircle,
             contentDescription = null, // decorative
@@ -151,39 +149,36 @@ private fun PostMetadata(
 
             Text(
                 text = stringResource(
-                    id = R.string.article_post_min_read,
-                    formatArgs = arrayOf(
-                        metadata.date,
-                        metadata.readTimeMinutes
+                    id = R.string.article_post_min_read, formatArgs = arrayOf(
+                        metadata.date, metadata.readTimeMinutes
                     )
-                ),
-                style = MaterialTheme.typography.bodySmall
+                ), style = MaterialTheme.typography.bodySmall
             )
         }
     }
 }
 
 @Composable
-private fun Paragraph(paragraph: Paragraph) {
-    val (textStyle, paragraphStyle, trailingPadding) = paragraph.type.getTextAndParagraphStyle()
-
+private fun Paragraph(paragraph: Paragraph, fontScaleFactor: Float = 1.0f) {
+    var (textStyle, paragraphStyle, trailingPadding) = paragraph.type.getTextAndParagraphStyle()
+    textStyle = textStyle.merge(
+        TextStyle(
+            fontSize = TextUnit(textStyle.fontSize.value * fontScaleFactor, TextUnitType.Sp)
+        )
+    )
     val annotatedString = paragraphToAnnotatedString(
-        paragraph,
-        MaterialTheme.typography,
-        MaterialTheme.colorScheme.codeBlockBackground
+        paragraph, MaterialTheme.typography, MaterialTheme.colorScheme.codeBlockBackground, fontScaleFactor
     )
     Box(modifier = Modifier.padding(bottom = trailingPadding)) {
         when (paragraph.type) {
             ParagraphType.Bullet -> BulletParagraph(
-                text = annotatedString,
-                textStyle = textStyle,
-                paragraphStyle = paragraphStyle
+                text = annotatedString, textStyle = textStyle, paragraphStyle = paragraphStyle
             )
+
             ParagraphType.CodeBlock -> CodeBlockParagraph(
-                text = annotatedString,
-                textStyle = textStyle,
-                paragraphStyle = paragraphStyle
+                text = annotatedString, textStyle = textStyle, paragraphStyle = paragraphStyle
             )
+
             ParagraphType.Header -> {
                 Text(
                     modifier = Modifier.padding(4.dp),
@@ -191,10 +186,9 @@ private fun Paragraph(paragraph: Paragraph) {
                     style = textStyle.merge(paragraphStyle)
                 )
             }
+
             else -> Text(
-                modifier = Modifier.padding(4.dp),
-                text = annotatedString,
-                style = textStyle
+                modifier = Modifier.padding(4.dp), text = annotatedString, style = textStyle
             )
         }
     }
@@ -202,9 +196,7 @@ private fun Paragraph(paragraph: Paragraph) {
 
 @Composable
 private fun CodeBlockParagraph(
-    text: AnnotatedString,
-    textStyle: TextStyle,
-    paragraphStyle: ParagraphStyle
+    text: AnnotatedString, textStyle: TextStyle, paragraphStyle: ParagraphStyle
 ) {
     Surface(
         color = MaterialTheme.colorScheme.codeBlockBackground,
@@ -212,18 +204,14 @@ private fun CodeBlockParagraph(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            modifier = Modifier.padding(16.dp),
-            text = text,
-            style = textStyle.merge(paragraphStyle)
+            modifier = Modifier.padding(16.dp), text = text, style = textStyle.merge(paragraphStyle)
         )
     }
 }
 
 @Composable
 private fun BulletParagraph(
-    text: AnnotatedString,
-    textStyle: TextStyle,
-    paragraphStyle: ParagraphStyle
+    text: AnnotatedString, textStyle: TextStyle, paragraphStyle: ParagraphStyle
 ) {
     Row {
         with(LocalDensity.current) {
@@ -249,9 +237,7 @@ private fun BulletParagraph(
 }
 
 private data class ParagraphStyling(
-    val textStyle: TextStyle,
-    val paragraphStyle: ParagraphStyle,
-    val trailingPadding: Dp
+    val textStyle: TextStyle, val paragraphStyle: ParagraphStyle, val trailingPadding: Dp
 )
 
 @Composable
@@ -268,73 +254,95 @@ private fun ParagraphType.getTextAndParagraphStyle(): ParagraphStyling {
             textStyle = typography.headlineSmall
             trailingPadding = 16.dp
         }
+
         ParagraphType.Text -> {
             textStyle = typography.bodyLarge.copy(lineHeight = 28.sp)
         }
+
         ParagraphType.Header -> {
             textStyle = typography.headlineMedium
             trailingPadding = 16.dp
         }
+
         ParagraphType.CodeBlock -> textStyle = typography.bodyLarge.copy(
             fontFamily = FontFamily.Monospace
         )
+
         ParagraphType.Quote -> textStyle = typography.bodyLarge
         ParagraphType.Bullet -> {
             paragraphStyle = ParagraphStyle(textIndent = TextIndent(firstLine = 8.sp))
         }
     }
     return ParagraphStyling(
-        textStyle,
-        paragraphStyle,
-        trailingPadding
+        textStyle, paragraphStyle, trailingPadding
     )
 }
 
 private fun paragraphToAnnotatedString(
     paragraph: Paragraph,
     typography: Typography,
-    codeBlockBackground: Color
+    codeBlockBackground: Color,
+    fontScaleFactor: Float = 1.0f,
 ): AnnotatedString {
-    val styles: List<AnnotatedString.Range<SpanStyle>> = paragraph.markups
-        .map { it.toAnnotatedStringItem(typography, codeBlockBackground) }
+    val styles: List<AnnotatedString.Range<SpanStyle>> =
+        paragraph.markups.map { it.toAnnotatedStringItem(typography, codeBlockBackground, fontScaleFactor = fontScaleFactor) }
     return AnnotatedString(text = paragraph.text, spanStyles = styles)
 }
 
 fun Markup.toAnnotatedStringItem(
     typography: Typography,
-    codeBlockBackground: Color
+    codeBlockBackground: Color,
+    fontScaleFactor: Float = 1.0f,
 ): AnnotatedString.Range<SpanStyle> {
     return when (this.type) {
         MarkupType.Italic -> {
             AnnotatedString.Range(
-                typography.bodyLarge.copy(fontStyle = FontStyle.Italic).toSpanStyle(),
-                start,
-                end
+                typography.bodyLarge.copy(
+                    fontStyle = FontStyle.Italic,
+                    fontSize = TextUnit(
+                        typography.bodyLarge.fontSize.value * fontScaleFactor,
+                        TextUnitType.Sp
+                    ),
+                ).toSpanStyle(), start, end
             )
         }
+
         MarkupType.Link -> {
             AnnotatedString.Range(
-                typography.bodyLarge.copy(textDecoration = TextDecoration.Underline).toSpanStyle(),
+                typography.bodyLarge.copy(
+                    textDecoration = TextDecoration.Underline,
+                    fontSize = TextUnit(
+                        typography.bodyLarge.fontSize.value * fontScaleFactor,
+                        TextUnitType.Sp
+                    ),
+                ).toSpanStyle(),
                 start,
                 end
             )
         }
+
         MarkupType.Bold -> {
             AnnotatedString.Range(
-                typography.bodyLarge.copy(fontWeight = FontWeight.Bold).toSpanStyle(),
-                start,
-                end
+                typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = TextUnit(
+                        typography.bodyLarge.fontSize.value * fontScaleFactor,
+                        TextUnitType.Sp
+                    ),
+                ).toSpanStyle(), start, end
             )
         }
+
         MarkupType.Code -> {
             AnnotatedString.Range(
-                typography.bodyLarge
-                    .copy(
-                        background = codeBlockBackground,
-                        fontFamily = FontFamily.Monospace
-                    ).toSpanStyle(),
-                start,
-                end
+                typography.bodyLarge.copy(
+                    background = codeBlockBackground,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = TextUnit(
+                        typography.bodyLarge.fontSize.value * fontScaleFactor,
+                        TextUnitType.Sp
+                    ),
+                ).toSpanStyle(), start, end
             )
         }
     }

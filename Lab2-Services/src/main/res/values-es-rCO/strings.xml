@@ -51,5 +51,10 @@
     <string name="file_save_error">Error guardando la publicación</string>
     <string name="file_saved_success">Publicación guardada existosamente</string>
     <string name="cd_downloads">Descargas</string>
+    <string name="font_size_label">Configuración de tamaño del texto</string>
+    <string name="small">Pequeño</string>
+    <string name="large">Grande</string>
+    <string name="extra_large">Extra grande</string>
+    <string name="medium">Medio</string>
 
 </resources>

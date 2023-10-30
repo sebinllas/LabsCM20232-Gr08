@@ -61,7 +61,13 @@
     <string name="downloads_title">Downloads</string>
     <string name="favorites_not_available_message">This functionality is not available in this context</string>
     <string name="file_save_error">Error saving post as file!</string>
-    <string name="file_saved_success">Post saved sucessfully!</string>
+    <string name="file_saved_success">Post saved successfully!</string>
     <string name="cd_downloads">Downloads</string>
+
+    <!-- Sizes -->
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="extra_large">Extra large</string>
 
 </resources>
